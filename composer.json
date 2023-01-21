@@ -1,0 +1,24 @@
+{
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.1",
+        "symfony/console": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Devbanana\\LetterBoxed\\": "src/",
+            "Devbanana\\LetterBoxed\\Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/devbanana/php-cs-fixer-config"
+        }
+    ],
+    "require-dev": {
+        "devbanana/php-cs-fixer-config": "dev-master",
+        "vimeo/psalm": "5.x-dev",
+        "phpunit/phpunit": "^9"
+    }
+}

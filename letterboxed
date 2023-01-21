@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Devbanana\LetterBoxed\Command\RemainingCommand;
+
+$app = new Application('Letter Boxed Solver');
+$app->add(new RemainingCommand());
+$app->run();
