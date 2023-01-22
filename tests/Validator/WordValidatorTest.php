@@ -30,6 +30,11 @@ final class WordValidatorTest extends TestCase
         self::assertFalse($this->wordValidator->validate([], $this->sides));
     }
 
+    public function testNonAlphaCharactersInSidesAreInvalid(): void
+    {
+        self::assertFalse($this->wordValidator->validate(['atom'], ['XBM', 'INA', 'OYL', 'TE-']));
+    }
+
     public function testConsecutiveLettersFromSameSideAreInvalid(): void
     {
         self::assertFalse($this->wordValidator->validate(['tea'], $this->sides));
@@ -39,6 +44,11 @@ final class WordValidatorTest extends TestCase
     public function testConsecutiveLettersFromDifferentSidesAreValid(): void
     {
         self::assertTrue($this->wordValidator->validate(['exclamation'], $this->sides));
+    }
+
+    public function testEveryLetterMustBeFoundInSides(): void
+    {
+        self::assertFalse($this->wordValidator->validate(['atoms'], $this->sides));
     }
 
     public function testInvalidIfFirstLetterOfWordDoesNotMatchLastLetterofPreviousWord(): void

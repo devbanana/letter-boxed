@@ -19,7 +19,9 @@ final class WordValidator
             return false;
         }
 
-        // Validate that $sides contains exactly 4 elements
+        // Filter out all non-alpha characters
+        $sides = array_filter($sides, 'ctype_alpha');
+
         if (\count($sides) !== 4) {
             return false;
         }
@@ -68,7 +70,7 @@ final class WordValidator
 
         foreach (str_split($word) as $letter) {
             $letterSide = $this->findSideByLetter($letter, $sides);
-            if ($previousLetterSide === $letterSide) {
+            if ($previousLetterSide === $letterSide || $letterSide === null) {
                 return false;
             }
             $previousLetterSide = $letterSide;
