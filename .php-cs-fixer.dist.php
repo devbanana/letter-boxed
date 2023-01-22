@@ -8,7 +8,7 @@ use PhpCsFixer\Finder;
 
 $finder = Finder::create()
     ->in(__DIR__)
-    ->append([__FILE__])
+    ->append([__FILE__, 'letterboxed'])
 ;
 
 return Configurator::fromPhpVersion(PhpVersion::PHP_80())
