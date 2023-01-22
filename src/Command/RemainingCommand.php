@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devbanana\LetterBoxed\Command;
 
+use Devbanana\LetterBoxed\Util\StripWords;
 use Devbanana\LetterBoxed\Validator\WordValidator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,10 +18,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class RemainingCommand extends Command
 {
     private WordValidator $wordValidator;
+    private StripWords $stripWords;
 
-    public function __construct(WordValidator $wordValidator)
+    public function __construct(WordValidator $wordValidator, StripWords $stripWords)
     {
         $this->wordValidator = $wordValidator;
+        $this->stripWords = $stripWords;
         parent::__construct();
     }
 
@@ -59,7 +62,14 @@ final class RemainingCommand extends Command
             return Command::INVALID;
         }
 
-        // TODO: add logic
+        $remaining = $this->stripWords->strip($words, $letters);
+
+        if (!empty($remaining)) {
+            $io->writeln('The remaining letters are:');
+            $io->writeln($remaining);
+        } else {
+            $io->writeln("<info>You've solved the puzzle! All the letters were used.</info>");
+        }
 
         return Command::SUCCESS;
     }
