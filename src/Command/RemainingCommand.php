@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devbanana\LetterBoxed\Command;
 
+use Devbanana\LetterBoxed\Validator\WordValidator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,6 +16,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'remaining', description: 'Determine remaining letters after word(s)')]
 final class RemainingCommand extends Command
 {
+    private WordValidator $wordValidator;
+
+    public function __construct(WordValidator $wordValidator)
+    {
+        $this->wordValidator = $wordValidator;
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
@@ -40,6 +49,12 @@ final class RemainingCommand extends Command
         $words = $input->getOption('word');
         if (!\is_array($words) || empty($words)) {
             $io->getErrorStyle()->error('At least 1 word is required.');
+
+            return Command::INVALID;
+        }
+
+        if (!$this->wordValidator->validate($words, $letters)) {
+            $io->getErrorStyle()->error('The provided words are invalid.');
 
             return Command::INVALID;
         }
