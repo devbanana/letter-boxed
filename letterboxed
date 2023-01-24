@@ -5,11 +5,17 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Devbanana\LetterBoxed\Command\RemainingCommand;
-use Devbanana\LetterBoxed\Util\StripWords;
-use Devbanana\LetterBoxed\Validator\WordValidator;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
+$loader->load('services.yaml');
+
+$container->compile();
 
 $app = new Application('Letter Boxed Solver');
-$app->add(new RemainingCommand(new WordValidator(), new StripWords()));
+$app->add($container->get('remaining_command'));
 $app->run();

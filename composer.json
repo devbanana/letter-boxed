@@ -1,8 +1,11 @@
 {
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "require": {
         "php": ">=8.1",
-        "symfony/console": "^6.2"
+        "symfony/config": "^6.2",
+        "symfony/console": "^6.2",
+        "symfony/dependency-injection": "^6.2",
+        "symfony/yaml": "^6.2"
     },
     "autoload": {
         "psr-4": {
@@ -18,7 +21,10 @@
     ],
     "require-dev": {
         "devbanana/php-cs-fixer-config": "dev-master",
-        "vimeo/psalm": "5.x-dev",
+        "vimeo/psalm": "^5",
         "phpunit/phpunit": "^9"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

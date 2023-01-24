@@ -1,0 +1,11 @@
+services:
+  remaining_command:
+    public: true
+    class: Devbanana\LetterBoxed\Command\RemainingCommand
+    arguments: ['@word_validator', '@strip_words']
+
+  word_validator:
+    class: Devbanana\LetterBoxed\Validator\WordValidator
+
+  strip_words:
+    class: Devbanana\LetterBoxed\Util\StripWords
